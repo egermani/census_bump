@@ -5,7 +5,7 @@ body, input, textarea {
 }
 
 body {
-  background-color: #EADEBD;
+  background-color: #FFF;
 }
 
 a, a:visited, a:focus {
@@ -130,7 +130,7 @@ a, a:visited, a:focus {
   text-transform: uppercase;
 
   text-align: center;
-  background-color: #EADEBD;
+  background-color: #CCC;
 
   padding: 10px;
   position: fixed;
