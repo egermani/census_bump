@@ -1,21 +1,22 @@
+// o A Game of Thrones, Bantam Books, 1996
+// o A Clash of Kings, Bantam Books, 1999
+// o A Storm of Swords, Bantam Books, 2000
+// o A Feast for Crows, Bantam Books, 2005
+// o A Dance with Dragons, Bantam Books, 2011
 
-var years = ["1890","1880","1870","1860", "1850", "1840", "1830", "1820", "1810", "1800", "1790"];
+
+var years = ["1996","1999","2000","2005", "2011"];
 var censuses = ["A Game of Thrones", "A Clash of Kings", "A Storm of Swords", "A Feast for Crows", "A Dance with Dragons", "6th census.", "5th census.", "4th census.", "3rd census.", "2nd census.", "1st census."];
 
 var sideEnds = {
-  "1790":0,
-  "1800":13,
-  "1810":22,
-  "1820":29,
-  "1830":41,
-  "1840":49
+  "2011":0,
 };
 
 var heraldryPalettes = {
   "houseStark": ["#F3F3F3", "#9C9C9C"],
   "houseLannister": ["#8B1919", "#FED600"],
   "houseBaratheon": ["#FFD71A", "#313131"],
-  "nightsWatch": ["#040404", "#0B0B0B"],
+  "nightsWatch": ["#0B0B0B", "#333333"],
   "houseBaelish": ["#339900", "#B5B5B5"],
   "houseTargaryen": ["#181717", "#D1381B"],
   "houseMormont": ["#65BD65", "#3C893C"],
@@ -26,7 +27,7 @@ var heraldryPalettes = {
   "houseClegane": ["#FCFF00", "#2C2C2C"],
   "stokeworth": ["#009900", "#FFFFFF"],
   "kingsguard": ["#E7D281", "#F5F5F5"],
-  "houseGreyjoy": ["#7F7F7F", "#FC9108"],
+  "houseGreyjoy": ["DimGray", "#FAB405"],
   "tarly": ["#009900", "#E34334"],
   "bolton": ["#FF93CA", "#E44434"],
   "houseTyrell": ["#006600", "#FED700"],
@@ -36,7 +37,7 @@ var heraldryPalettes = {
   "seaworth": ["#000000", "#C8C8C8"],
   "houseHollard": ["#E24334", "#1F43EB"],
   "houseTarth": ["#0000FF", "#FF007F"],
-  "houseReed": ["#BFCBBD", "#2B2B2B"],
+  "houseReed": ["#5B8B63", "#2B2B2B"],
   "bywater": ["#1F43EB", "#FFFFFF"],
   "fieryheart": ["#8B0000", "#D4AF37"],
   "houseManderly": ["#019DAA", "#03490A"],
@@ -59,6 +60,9 @@ var heraldryPalettes = {
   "unknown": ["#69543E", "#5C4B3D"],
   "stannis": ["#740001", "#D1B41D"],
   "lem": ["#FAE41B"],
+  "aemon": ["gray", "black", "red"],
+  "daario": ["#1D7BDE", "#FDE533"],
+  "illyrio": ["#FCFF47"],
 };
 
 var chart = function() {
@@ -72,11 +76,11 @@ var chart = function() {
     {func:littleSquares, opts: {colors: heraldryPalettes["houseBaelish"]}, id:"littlefinger", name:"Littlefinger"},
     {func:oneColor, opts: {colors: heraldryPalettes["nightsWatch"]}, id:"jeor_mormont", name:"Jeor Mormont"},
     {func:twoColorDiag, opts: {colors: heraldryPalettes["unknown"]}, id:"varys", name:"Varys"},
-    {func:oneColor, opts: {colors: heraldryPalettes["houseStark"]}, id:"robb", name:"Robb"},
+    {func:midFlag, opts: {colors: heraldryPalettes["houseStark"], width:0.6, skew:20}, id:"robb", name:"Robb"},
     {func:midStripe, opts: {colors: heraldryPalettes["houseTargaryen"], width:0.65}, id:"dany_targaryen", name:"Daenerys"},
     {func:midStripe, opts: {colors: heraldryPalettes["houseMormont"], width:0.3}, id:"jorah_mormont", name:"Jorah Mormont"},
     {func:twoColor, opts: {colors: heraldryPalettes["houseLannister"]}, id:"cersei_lannister", name:"Cersei Lannister"},
-    {func:oneColor, opts: {colors: heraldryPalettes["houseStark"]}, id:"sansa_stark", name:"Sansa Stark"},
+    {func:twoHooks, opts: {colors: heraldryPalettes["houseStark"], width:0.4}, id:"sansa_stark", name:"Sansa Stark"},
     {func:littleSquares, opts: {colors: heraldryPalettes["unknown"]}, id:"grand_maester_pycelle", name:"Pycelle"},
     {func:oneColor, opts: {colors: heraldryPalettes["houseStark"]}, id:"maester_luwin", name:"Maester Luwin"},
     {func:longStripe, opts: {colors: heraldryPalettes["houseStark"], width:0.6, edge:false}, id:"arya_stark", name:"Arya Stark"},
@@ -87,7 +91,7 @@ var chart = function() {
     {func:twoColorVert, opts: {colors: heraldryPalettes["houseFrey"]}, id:"walder_frey", name:"Walder Frey"},
     {func:bigTriInverted, opts: {colors: heraldryPalettes["houseTully"]}, id:"brynden_tully", name:"Brynden Tully"},
     {func:twoColor, opts: {colors: heraldryPalettes["nightsWatch"]}, id:"sam", name:"Sam"},
-    {func:twoColorVert, opts: {colors: heraldryPalettes["nightsWatch"]}, id:"aemon_targaryen", name:"Aemon Targaryen"},
+    {func:theTeeth, opts: {colors: heraldryPalettes["aemon"]}, id:"aemon_targaryen", name:"Aemon Targaryen"},
     {func:oneColor, opts: {colors: heraldryPalettes["unknown"]}, id:"mirri_maz_duur", name:"Mirri Maz Duur"},
     {func:oneColor, opts: {colors: heraldryPalettes["houseArryn"]}, id:"lysa_arryn", name:"Lysa Arryn"},
     {func:twoColorDiag, opts: {colors: heraldryPalettes["houseCassel"]}, id:"rodrik_cassel", name:"Rodrik Cassel"},
@@ -98,7 +102,7 @@ var chart = function() {
     {func:midStripe, opts: {colors: heraldryPalettes["kingsguard"], width:0.8}, id:"barristan_selmy", name:"Barristan Selmy"},
     {func:midStripe, opts: {colors: heraldryPalettes["houseLannister"], width:0.2, offset:8}, id:"jaime_lannister", name:"Jaime Lannister"},
     {func:candyStripe, opts: {colors: heraldryPalettes["houseBaratheon"]}, id:"renly_baratheon", name:"Renly Baratheon"},
-    {func:oneColor, opts: {colors: heraldryPalettes["unknown"]}, id:"illyrio", name:"Illyrio"},
+    {func:oneColor, opts: {colors: heraldryPalettes["illyrio"]}, id:"illyrio", name:"Illyrio"},
     {func:doubleStripe, opts: {colors: heraldryPalettes["houseGreyjoy"], width:0.15, dist:0.0}, id:"theon_greyioy", name:"Theon Greyioy"},
     {func:midStripe, opts: {colors: heraldryPalettes["unknown"], width:0.3} , id:"khal_drogo", name:"Khal Drogo"},
     {func:midFlag, opts: {colors: heraldryPalettes["nightsWatch"], width:0.27, skew:6}, id:"alliser_thorne", name:"Alliser Thorne"},
@@ -127,7 +131,7 @@ var chart = function() {
     {func:bigX, opts: {colors: heraldryPalettes["houseTyrell"], width:1.0}, id:"loras_tyrell", name:"Loras Tyrell"},
     {func:bigX, opts: {colors: heraldryPalettes["nightsWatch"], width:1.0}, id:"jonos_bracken", name:"Jonos Bracken"},
     {func:theTeeth, opts: {colors: heraldryPalettes["dondarrion"], width:1.0}, id:"beric_dondarrion", name:"Beric Dondarrion"},
-    {func:theTeeth, opts: {colors: heraldryPalettes["unknown"], width:1.0}, id:"harwin", name:"Harwin"},
+    {func:theTeeth, opts: {colors: heraldryPalettes["houseStark"], width:1.0}, id:"harwin", name:"Harwin"},
     {func:bigX, opts: {colors: heraldryPalettes["houseLannister"], width:1.0}, id:"tommen", name:"Tommen"},
     {func:theTeeth, opts: {colors: heraldryPalettes["housePayne"], width:1.0}, id:"podrick_payne", name:"Podrick Payne"},
     {func:midStripe, opts: {colors: heraldryPalettes["stannis"], width:0.6} , id:"stannis_baratheon", name:"Stannis"},
@@ -152,7 +156,7 @@ var chart = function() {
     {func:midStripe, opts: {colors: heraldryPalettes["fieryheart"], width:0.65, offset:0}, id:"melisandre", name:"Melisandre"},
     {func:twoColor, opts: {colors: heraldryPalettes["houseLannister"]}, id:"lancel_lannister", name:"Lancel Lannister"},
     {func:bigTri, opts: {colors: heraldryPalettes["houseReed"]}, id:"meera_reed", name:"Meera Reed"},
-    {func:oneColor, opts: {colors: heraldryPalettes["unknown"]}, id:"aeron_damphair", name:"Aeron Damphair"},
+    {func:twoColorDiagRev, opts: {colors: heraldryPalettes["houseGreyjoy"]}, id:"aeron_damphair", name:"Aeron Damphair"},
     {func:twoColorDiag, opts: {colors: heraldryPalettes["fieryheart"]}, id:"selyse_baratheon", name:"Selyse Baratheon"},
     {func:twoColor, opts: {colors: heraldryPalettes["houseManderly"]}, id:"wyman_manderly", name:"Wyman Manderly"},
     {func:twoColor, opts: {colors: heraldryPalettes["unknown"]}, id:"a_captain", name:"A Captain"},
@@ -172,9 +176,9 @@ var chart = function() {
     {func:twoColorVert, opts: {colors: heraldryPalettes["unknown"]}, id:"kraznys", name:"Kraznys"},
     {func:midFlag, opts: {colors: heraldryPalettes["unknown"], width:0.25, skew:6}, id:"thoros", name:"Thoros"},
     {func:oneColor, opts: {colors: heraldryPalettes["lem"]}, id:"lem_lemoncloak", name:"Lem Lemoncloak"},
-    {func:twoColorVert, opts: {colors: heraldryPalettes["houseFrey"]}, id:"lothar_frey", name:"Lothar Frey"},
+    {func:twoColorVert, opts: {colors: heraldryPalettes["houseFrey"], skew: 30}, id:"lothar_frey", name:"Lothar Frey"},
     {func:oneColor, opts: {colors: heraldryPalettes["unknown"]}, id:"brown_ben_plumm", name:"Brown Ben Plumm"},
-    {func:twoColor, opts: {colors: heraldryPalettes["stormcrows"]}, id:"daario_naharis", name:"Daario Naharis"},
+    {func:littleSquares, opts: {colors: heraldryPalettes["daario"]}, id:"daario_naharis", name:"Daario Naharis"},
     {func:twoColorVert, opts: {colors: heraldryPalettes["unknown"]}, id:"val", name:"Val"},
     {func:oneColor, opts: {colors: heraldryPalettes["unknown"]}, id:"haldon_halfmaester", name:"Haldon Halfmaester"},
     {func:oneColor, opts: {colors: heraldryPalettes["meereen"]}, id:"skahaz_mo_kandaq", name:"Skahaz mo Kandaq"},
@@ -183,7 +187,7 @@ var chart = function() {
     {func:bigTriInverted, opts: {colors: heraldryPalettes["houseRyswell"]}, id:"barbrey_dustin", name:"Barbrey Dustin"},
     {func:twoColorDiag, opts: {colors: heraldryPalettes["windswept"]}, id:"gerris_drinkwater", name:"Gerris Drinkwater"},
     {func:twoHooks, opts: {colors: heraldryPalettes["houseMartell"], width:0.1}, id:"quentyn_martell", name:"Quentyn Martell"},
-    {func:midStripe, opts: {colors: heraldryPalettes["secondSons"], width:0.5}, id:"penny", name:"Penny"},
+    {func:midStripe, opts: {colors: heraldryPalettes["unknown"], width:0.5}, id:"penny", name:"Penny"},
     {func:midStripe, opts: {colors: heraldryPalettes["houseMartell"], width:0.2, offset:8}, id:"doran_martell", name:"Doran Martell"},
     {func:bigTri, opts: {colors: heraldryPalettes["secondSons"]}, id:"the_tattered_prince", name:"The Tattered Prince"},
     {func:oneColor, opts: {colors: heraldryPalettes["borell"]}, id:"godric_borrell", name:"Godric Borrell"},
@@ -196,7 +200,7 @@ var chart = function() {
     {func:longStripe, opts: {colors: heraldryPalettes["houseTargaryen"], width:0.6, edge:false}, id:"bloodraven", name:"Bloodraven"},
     {func:bigTri, opts: {colors: heraldryPalettes["houseKarstark"]}, id:"alys_karstark", name:"Alys Karstark"},
     {func:twoColorVert, opts: {colors: heraldryPalettes["goldenCompany"]}, id:"harry_strickland", name:"Harry Strickland"},
-    {func:doubleStripe, opts: {colors: heraldryPalettes["faithstar"], width:0.25, skew:6}, id:"high_sparrow", name:"High Sparrow"},
+    {func:doubleStripe, opts: {colors: heraldryPalettes["faithstar"], width:0.25, dist:-0.5}, id:"high_sparrow", name:"High Sparrow"},
     {func:twoColor, opts: {colors: heraldryPalettes["houseMartell"]}, id:"obara_sand", name:"Obara Sand"},
     {func:twoColorVert, opts: {colors: heraldryPalettes["houseMartell"]}, id:"arianne_martell", name:"Arianne Martell"},
     {func:oneColor, opts: {colors: heraldryPalettes["houseHarlaw"]}, id:"rodrik_harlaw", name:"Rodrik Harlaw"},
@@ -212,7 +216,7 @@ var chart = function() {
     {func:midStripe, opts: {colors: heraldryPalettes["houseMartell"], width:0.5}, id:"alleras", name:"Alleras"},
     {func:midStripe, opts: {colors: heraldryPalettes["unknown"], width:0.2, offset:8}, id:"rennifer_longwaters", name:"Rennifer Longwaters"},
     {func:bigTri, opts: {colors: heraldryPalettes["houseVelaryon"]}, id:"aurane_waters", name:"Aurane Waters"},
-    {func:doubleFlag, opts: {colors: heraldryPalettes["houseTyrell"]}, id:"leo_tyrell", name:"Leo Tyrell"},
+    {func:doubleFlag, opts: {colors: heraldryPalettes["houseTyrell"], width:0.08, dist: 0.3}, id:"leo_tyrell", name:"Leo Tyrell"},
     {func:bigTri, opts: {colors: heraldryPalettes["creightonLongbough"]}, id:"creighton_longbough", name:"Creighton Longbough"},
   ];
 
@@ -220,7 +224,7 @@ var chart = function() {
   var pillWidth = 100;
   var pillHeight = pillWidth / 7;
   var pillSpace = 10;
-  var yearSpace = 60;
+  var yearSpace = 90;
   var data = [];
   var aspect = 0;
   var margin = {top: 80, right: 50, bottom: 20, left: 100};
@@ -351,21 +355,20 @@ var chart = function() {
       .attr("fill", opts.colors[1]);
   }
 
-  function trapezoid(selection, width, height, opts) {
+  function bigTrapezoid(selection, width, height, opts) {
     selection.call(oneColor, width, height, opts);
 
-    var stripeWidth = width * opts.width;
-    var offset = 0;
-    if(opts.offset) {
-      offset = opts.offset;
-    }
+    var edge = width / 10;
 
-    selection.append("rect")
-      .attr("x", ((width / 2) - offset) - (stripeWidth / 2))
-      .attr("y", 0)
-      .attr("width", stripeWidth)
-      .attr("height", height)
-      .attr("fill", opts.colors[1]);
+    selection.append("path")
+      .attr("fill", opts.colors[1])
+      .attr("d", function() {
+        var path = "M " + edge + "," + height;
+        path += " l " + ((width / 2) - edge) + "," + (-1 * height);
+        path += " l " + ((width / 2) - edge)  + "," + height;
+        path += " z";
+        return path;
+      });
   }
 
   function doubleStripe(selection, width, height, opts) {
@@ -727,7 +730,6 @@ var chart = function() {
 
       orgWidth = width = (pillWidth + yearSpace) * years.length;
       orgHeight = height = (pillHeight + pillSpace) * 50;
-
 
       svg.attr("width", width + margin.left + margin.right );
       svg.attr("height", height + margin.top + margin.bottom );
